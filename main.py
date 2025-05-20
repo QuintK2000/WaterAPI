@@ -45,4 +45,6 @@ async def download_file(request: Request):
 @app.get("/data/water-potability/preview")
 async def preview_data(request: Request):
     verify_token(request)
-    return df.head(5).to_dict(orient="records")
+    preview_df = df.head(5).replace({np.nan: None, np.inf: None, -np.inf: None})
+    return preview_df.to_dict(orient="records")
+
